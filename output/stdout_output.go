@@ -1,0 +1,16 @@
+package output
+
+import (
+	"os"
+
+	"github.com/chenjiayao/godeng/inter"
+)
+
+type StdoutOutput struct {
+}
+
+var _ inter.Output = &StdoutOutput{}
+
+func (o *StdoutOutput) Output(content []byte) {
+	os.Stdout.Write(content)
+}
