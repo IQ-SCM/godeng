@@ -1,0 +1,27 @@
+{
+    
+    "fields":[
+        {
+            "key":"status_code",
+            "type":"enum",
+            "value":[
+                "200",
+                "400",
+                "401",
+                "403",
+                "404",
+                "500"
+            ]
+        },
+        {
+            "key":"name",
+            "type":"string"
+        },
+        {
+            "key":"age",
+            "type":"int",
+            "max":100,
+            "min":1
+        }
+    ]
+}
