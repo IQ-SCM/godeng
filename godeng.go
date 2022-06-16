@@ -103,7 +103,6 @@ func (g *GoDeng) Start() {
 	} else {
 		g.run()
 	}
-
 }
 
 func (g *GoDeng) runForever() {
@@ -121,7 +120,6 @@ func (g *GoDeng) runForever() {
 func (g *GoDeng) run() {
 
 	for i := 1; i <= int(g.count); i++ {
-		time.Sleep(time.Duration(g.sleep) * time.Second)
 		g.wangChan <- g.generateRow()
 	}
 	g.cancel()
@@ -148,6 +146,9 @@ func (g *GoDeng) barking() {
 		case <-g.ctx.Done():
 			return
 		case item := <-g.wangChan:
+			if g.sleep > 0 {
+				time.Sleep(time.Duration(g.sleep) * time.Second)
+			}
 			b := g.format.Format(item)
 			g.output.Output(b)
 		}
