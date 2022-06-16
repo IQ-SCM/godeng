@@ -13,7 +13,7 @@ import (
 
 type GoDeng struct {
 	output   inter.Output
-	wangChan chan *Row
+	wangChan chan row
 	format   inter.Format
 	fields   []inter.Field
 	config   Config
@@ -22,7 +22,7 @@ type GoDeng struct {
 func makeGoDeng(cfg *Config) *GoDeng {
 
 	g := &GoDeng{
-		wangChan: make(chan *Row),
+		wangChan: make(chan row),
 	}
 	switch cfg.f {
 	case "json":
@@ -50,15 +50,20 @@ func makeGoDeng(cfg *Config) *GoDeng {
 		}
 	}
 	g.fields = fields
-
 	return g
 }
 
-func (g *GoDeng) generate() Row {
-
-	for _, field := range g.fields {
-		field.Value()
-		field.Key()
+func (g *GoDeng) generateRow() row {
+	kvs := make([]rowItem, len(g.fields))
+	for idx, field := range g.fields {
+		kv := rowItem{
+			key: field.Key(),
+			val: field.Value(),
+		}
+		kvs[idx] = kv
+	}
+	return row{
+		kvs: kvs,
 	}
 }
 
@@ -69,7 +74,11 @@ func (g *GoDeng) barking() {
 	}
 }
 
-type Row struct {
-	key   string
-	value interface{}
+type rowItem struct {
+	key string
+	val interface{}
+}
+
+type row struct {
+	kvs []rowItem
 }
