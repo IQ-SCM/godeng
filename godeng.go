@@ -5,9 +5,7 @@ import (
 
 	"github.com/chenjiayao/godeng/constant"
 	"github.com/chenjiayao/godeng/field"
-	"github.com/chenjiayao/godeng/format"
 	"github.com/chenjiayao/godeng/inter"
-	"github.com/chenjiayao/godeng/output"
 	"github.com/chenjiayao/godeng/rule"
 )
 
@@ -17,9 +15,10 @@ type GoDeng struct {
 	format   inter.Format
 	fields   []inter.Field
 	config   Config
+	count    int64
 }
 
-func makeGoDeng(cfg *Config) *GoDeng {
+func MakeGoDeng(cfg *Config, output string, format string, count int64) *GoDeng {
 
 	g := &GoDeng{
 		wangChan: make(chan row),
