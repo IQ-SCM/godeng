@@ -1,8 +1,10 @@
 package sub
 
 import (
+	"log"
 	"os"
 
+	"github.com/chenjiayao/godeng"
 	"github.com/spf13/cobra"
 )
 
@@ -13,6 +15,7 @@ var count int64
 var url string
 var tablename string
 var sleep int64
+var forever bool
 
 var rootCmd = &cobra.Command{
 	Use: "godeng",
@@ -29,6 +32,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&url, "url", "u", "", "url")
 	rootCmd.PersistentFlags().StringVarP(&tablename, "tablename", "t", "", "tablename")
 	rootCmd.PersistentFlags().Int64VarP(&sleep, "sleep", "s", 0, "sleep")
+	rootCmd.PersistentFlags().BoolVarP(&forever, "forever", "", false, "forever")
 }
 
 func Execute() {
@@ -38,5 +42,9 @@ func Execute() {
 }
 
 func run() {
-
+	config, err := godeng.Parser(cfgFile)
+	if err != nil {
+		log.Fatal(err)
+	}
+	godeng.MakeGoDeng(config, output, format, count, forever, sleep, url, tablename).Start()
 }
