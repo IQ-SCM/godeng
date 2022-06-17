@@ -90,6 +90,9 @@ func MakeGoDeng(cfg *Config, o string, f string, count int64, forever bool, slee
 		case constant.FIELD_TYPE_TIMESTAMP:
 			r := rule.MakeRuleTimestamp()
 			fields[idx] = field.MakeFieldTimestamp(item.key, r)
+		case constant.FIELD_TYPE_UA:
+			r := rule.MakeRuleUA()
+			fields[idx] = field.MakeFieldUA(item.key, r)
 		default:
 			log.Println("unknow field type:", item.typ)
 		}

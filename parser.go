@@ -71,6 +71,8 @@ func makeFields(fields []map[string]interface{}) (*Config, error) {
 			cfgItem, err = parserTimestamp(field)
 		case constant.FIELD_TYPE_SEQUENCE:
 			cfgItem, err = parserSequence(field)
+		case constant.FIELD_TYPE_UA:
+			cfgItem, err = parserUA(field)
 		default:
 			log.Printf("unknown field type: %s", fieldType)
 		}
@@ -219,6 +221,17 @@ func parserDatetime(field map[string]interface{}) (*ConfigItem, error) {
 
 func parserMac(field map[string]interface{}) (*ConfigItem, error) {
 	if err := validator.ValidateMac(field); err != nil {
+		return nil, err
+	}
+
+	cfgItem := &ConfigItem{
+		key: field["key"].(string),
+	}
+	return cfgItem, nil
+}
+
+func parserUA(field map[string]interface{}) (*ConfigItem, error) {
+	if err := validator.ValidateUA(field); err != nil {
 		return nil, err
 	}
 

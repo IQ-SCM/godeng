@@ -133,6 +133,14 @@ func ValidateMac(cfgMap map[string]interface{}) error {
 	return nil
 }
 
+func ValidateUA(cfgMap map[string]interface{}) error {
+	_, ok := cfgMap["key"]
+	if !ok {
+		return fmt.Errorf("key is empty")
+	}
+	return nil
+}
+
 func ValidateEnum(cfgMap map[string]interface{}) error {
 	_, ok := cfgMap["key"]
 	if !ok {

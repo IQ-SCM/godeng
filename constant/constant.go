@@ -14,4 +14,5 @@ const (
 	FIELD_TYPE_TIMESTAMP = "timestamp"
 	FILELD_TYPE_EMAIL    = "email"
 	FIELD_TYPE_SEQUENCE  = "sequence"
+	FIELD_TYPE_UA        = "ua"
 )

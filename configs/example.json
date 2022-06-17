@@ -54,6 +54,10 @@
             "type":"ipv6"
         },
         {
+            "key":"user-agent",
+            "type":"ua"
+        },
+        {
             "key":"score",
             "type":"float"
         },
