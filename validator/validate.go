@@ -144,3 +144,31 @@ func ValidateEnum(cfgMap map[string]interface{}) error {
 	}
 	return nil
 }
+
+func ValidateSequence(cfgMap map[string]interface{}) error {
+	_, ok := cfgMap["key"]
+	if !ok {
+		return fmt.Errorf("key is empty")
+	}
+
+	begin, beginExist := cfgMap["begin"]
+	if !beginExist {
+		return fmt.Errorf("begin is nil")
+	}
+	step, stepExist := cfgMap["step"]
+	if !stepExist {
+		return fmt.Errorf("begin is nil")
+	}
+
+	_, ok = begin.(float64)
+	if !ok {
+		return fmt.Errorf("begin is not number")
+	}
+
+	_, ok = step.(float64)
+	if !ok {
+		return fmt.Errorf("step is not number")
+	}
+
+	return nil
+}
