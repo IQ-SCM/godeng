@@ -12,5 +12,6 @@ type StdoutOutput struct {
 var _ inter.Output = &StdoutOutput{}
 
 func (o *StdoutOutput) Output(content []byte) {
+	content = append(content, '\n')
 	os.Stdout.Write(content)
 }
