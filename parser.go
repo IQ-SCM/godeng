@@ -61,6 +61,8 @@ func makeFields(fields []map[string]interface{}) (*Config, error) {
 			cfgItem, err = parserURL(field)
 		case constant.FILELD_TYPE_EMAIL:
 			cfgItem, err = parserEmail(field)
+		case constant.FILED_TYPE_MAC:
+			cfgItem, err = parserMac(field)
 		case constant.FIELD_TYPE_ENUM:
 			cfgItem, err = parserEnum(field)
 		case constant.FIELD_TYPE_DATETIME:
@@ -206,6 +208,17 @@ func parserTimestamp(field map[string]interface{}) (*ConfigItem, error) {
 
 func parserDatetime(field map[string]interface{}) (*ConfigItem, error) {
 	if err := validator.ValidateDatetime(field); err != nil {
+		return nil, err
+	}
+
+	cfgItem := &ConfigItem{
+		key: field["key"].(string),
+	}
+	return cfgItem, nil
+}
+
+func parserMac(field map[string]interface{}) (*ConfigItem, error) {
+	if err := validator.ValidateMac(field); err != nil {
 		return nil, err
 	}
 

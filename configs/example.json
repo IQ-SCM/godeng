@@ -60,6 +60,10 @@
         {
             "key":"bool",
             "type":"bool"
+        },
+        {
+            "key":"mac",
+            "type":"mac"
         }
     ]
 }

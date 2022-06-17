@@ -63,6 +63,9 @@ func MakeGoDeng(cfg *Config, o string, f string, count int64, forever bool, slee
 		case constant.FIELD_TYPE_FLOAT:
 			r := rule.MakeRuleFloat(float64(item.min), float64(item.max))
 			fields[idx] = field.MakeFieldFloat(item.key, r)
+		case constant.FILED_TYPE_MAC:
+			r := rule.MakeRuleMac()
+			fields[idx] = field.MakeFieldMac(item.key, r)
 		case constant.FIELD_TYPE_BOOL:
 			r := rule.MakeRuleBool()
 			fields[idx] = field.MakeFieldBool(item.key, r)

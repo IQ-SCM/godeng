@@ -5,6 +5,7 @@ const (
 	FIELD_TYPE_INT       = "int"
 	FIELD_TYPE_FLOAT     = "float"
 	FILED_TYPE_IPV4      = "ipv4"
+	FILED_TYPE_MAC       = "mac"
 	FILED_TYPE_IPV6      = "ipv6"
 	FIELD_TYPE_BOOL      = "bool"
 	FIELD_TYPE_ENUM      = "enum"
