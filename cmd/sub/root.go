@@ -16,6 +16,7 @@ var url string
 var tablename string
 var sleep int64
 var forever bool
+var file string
 
 var rootCmd = &cobra.Command{
 	Use: "godeng",
@@ -33,6 +34,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&tablename, "tablename", "t", "", "tablename")
 	rootCmd.PersistentFlags().Int64VarP(&sleep, "sleep", "s", 0, "sleep")
 	rootCmd.PersistentFlags().BoolVarP(&forever, "forever", "", false, "forever")
+	rootCmd.PersistentFlags().StringVarP(&file, "file", "", "", "file")
 }
 
 func Execute() {
@@ -46,5 +48,5 @@ func run() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	godeng.MakeGoDeng(config, output, format, count, forever, sleep, url, tablename).Start()
+	godeng.MakeGoDeng(config, output, format, count, forever, sleep, url, tablename, file).Start()
 }

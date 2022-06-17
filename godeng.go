@@ -31,7 +31,7 @@ type GoDeng struct {
 	ctx       context.Context
 }
 
-func MakeGoDeng(cfg *Config, o string, f string, count int64, forever bool, sleep int64, url string, tablename string) *GoDeng {
+func MakeGoDeng(cfg *Config, o string, f string, count int64, forever bool, sleep int64, url string, tablename string, file string) *GoDeng {
 
 	g := &GoDeng{
 		wangChan: make(chan row, 20480),
@@ -49,7 +49,9 @@ func MakeGoDeng(cfg *Config, o string, f string, count int64, forever bool, slee
 
 	switch o {
 	case "stdout":
-		g.output = &output.StdoutOutput{}
+		g.output = output.MakeStdoutOutput()
+	case "file":
+		g.output = output.MakeFileOutput(file)
 	}
 
 	fields := make([]inter.Field, len(cfg.items))

@@ -15,3 +15,7 @@ func (o *StdoutOutput) Output(content []byte) {
 	content = append(content, '\n')
 	os.Stdout.Write(content)
 }
+
+func MakeStdoutOutput() *StdoutOutput {
+	return &StdoutOutput{}
+}
