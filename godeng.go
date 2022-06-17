@@ -39,6 +39,10 @@ func MakeGoDeng(cfg *Config, o string, f string, count int64, forever bool, slee
 	switch f {
 	case "json":
 		g.format = &format.JSONFormat{}
+	case "sql":
+		g.format = &format.SQLFormat{
+			Tablename: tablename,
+		}
 	default:
 		log.Println("unknow format")
 	}
@@ -130,6 +134,7 @@ func (g *GoDeng) Start() {
 
 func (g *GoDeng) runForever() {
 
+	defer close(g.wangChan)
 	for {
 		select {
 		case <-g.ctx.Done():
@@ -141,6 +146,7 @@ func (g *GoDeng) runForever() {
 }
 
 func (g *GoDeng) run() {
+	defer close(g.wangChan)
 
 	for i := 1; i <= int(g.count); i++ {
 		g.wangChan <- g.generateRow()
