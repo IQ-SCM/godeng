@@ -4,7 +4,7 @@
         {
             "key":"status_code",
             "type":"enum",
-            "value":[
+            "enum":[
                 "200",
                 "400",
                 "401",
@@ -22,6 +22,44 @@
             "type":"int",
             "max":100,
             "min":1
+        },
+        {
+            "key":"id",
+            "type":"sequence",
+            "begin":1,
+            "step":1
+        },
+        {
+            "key":"address",
+            "type":"url"
+        },
+        {
+            "key":"email",
+            "type":"email"
+        },
+        {
+            "key":"timestamp",
+            "type":"timestamp"
+        },
+        {
+            "key":"datetime",
+            "type":"datetime"
+        },
+        {
+            "key":"ipv4",
+            "type":"ipv4"
+        },
+        {
+            "key":"ipv6",
+            "type":"ipv6"
+        },
+        {
+            "key":"score",
+            "type":"float"
+        },
+        {
+            "key":"bool",
+            "type":"bool"
         }
     ]
 }
