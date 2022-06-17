@@ -1,8 +1,10 @@
 package rule
 
 import (
+	"fmt"
 	"math"
 	"math/rand"
+	"strconv"
 	"time"
 
 	"github.com/chenjiayao/godeng/inter"
@@ -23,7 +25,9 @@ func (rule *RuleFloat) Generate() interface{} {
 	maxInt := math.Ceil(rule.max)
 
 	base := float64(rand.Int63n(int64(maxInt-minInt)) + int64(minInt))
-	return base + rand.Float64()
+	value, _ := strconv.ParseFloat(fmt.Sprintf("%.2f", base+rand.Float64()), 64)
+
+	return value
 }
 
 func MakeRuleFloat(min, max float64) *RuleFloat {
