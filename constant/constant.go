@@ -12,4 +12,5 @@ const (
 	FIELD_TYPE_DATETIME  = "datetime"
 	FIELD_TYPE_TIMESTAMP = "timestamp"
 	FILELD_TYPE_EMAIL    = "email"
+	FIELD_TYPE_SEQUENCE  = "sequence"
 )

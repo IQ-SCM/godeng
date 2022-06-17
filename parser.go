@@ -2,6 +2,7 @@ package godeng
 
 import (
 	"errors"
+	"log"
 
 	"github.com/chenjiayao/godeng/constant"
 	"github.com/chenjiayao/godeng/validator"
@@ -18,11 +19,15 @@ func Parser(cfgFile string) (*Config, error) {
 	if fieldsVal == nil {
 		return nil, errors.New("fields is empty")
 	}
-	fields, ok := fieldsVal.([]map[string]interface{})
+	inters, ok := fieldsVal.([]interface{})
 	if !ok {
 		return nil, errors.New("fields is not array")
 	}
 
+	fields := make([]map[string]interface{}, len(inters))
+	for idx, inter := range inters {
+		fields[idx] = inter.(map[string]interface{})
+	}
 	return makeFields(fields)
 }
 
@@ -31,17 +36,21 @@ func makeFields(fields []map[string]interface{}) (*Config, error) {
 	cfgItems := make([]*ConfigItem, len(fields))
 
 	for idx, field := range fields {
+
 		fieldType, ok := field["type"].(string)
 		if !ok {
 			return nil, errors.New("field type is not string")
 		}
 		var cfgItem *ConfigItem
 		var err error
+
 		switch fieldType {
 		case constant.FIELD_TYPE_INT:
 			cfgItem, err = parserInt(field)
 		case constant.FIELD_TYPE_FLOAT:
 			cfgItem, err = parserFloat(field)
+		case constant.FIELD_TYPE_BOOL:
+			cfgItem, err = parserBool(field)
 		case constant.FIELD_TYPE_STRING:
 			cfgItem, err = parserString(field)
 		case constant.FILED_TYPE_IPV4:
@@ -58,10 +67,15 @@ func makeFields(fields []map[string]interface{}) (*Config, error) {
 			cfgItem, err = parserDatetime(field)
 		case constant.FIELD_TYPE_TIMESTAMP:
 			cfgItem, err = parserTimestamp(field)
+		case constant.FIELD_TYPE_SEQUENCE:
+			cfgItem, err = parserSequence(field)
+		default:
+			log.Printf("unknown field type: %s", fieldType)
 		}
 		if err != nil {
 			return nil, err
 		}
+		cfgItem.typ = fieldType
 		cfgItems[idx] = cfgItem
 	}
 
@@ -98,7 +112,7 @@ func parserFloat(field map[string]interface{}) (*ConfigItem, error) {
 		return nil, err
 	}
 
-	max := float64(0)
+	max := float64(100)
 	min := float64(0)
 	_, ok := field["max"]
 	if ok {
@@ -218,7 +232,21 @@ func parserEnum(field map[string]interface{}) (*ConfigItem, error) {
 	}
 
 	cfgItem := &ConfigItem{
-		key: field["key"].(string),
+		key:   field["key"].(string),
+		enums: field["enum"].([]interface{}),
+	}
+	return cfgItem, nil
+}
+
+func parserSequence(field map[string]interface{}) (*ConfigItem, error) {
+	if err := validator.ValidateSequence(field); err != nil {
+		return nil, err
+	}
+
+	cfgItem := &ConfigItem{
+		key:   field["key"].(string),
+		begin: field["begin"].(float64),
+		step:  field["step"].(float64),
 	}
 	return cfgItem, nil
 }

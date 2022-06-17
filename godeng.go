@@ -3,6 +3,9 @@ package godeng
 import (
 	"context"
 	"log"
+	"os"
+	"os/signal"
+	"syscall"
 	"time"
 
 	"github.com/chenjiayao/godeng/constant"
@@ -78,8 +81,14 @@ func MakeGoDeng(cfg *Config, o string, f string, count int64, forever bool, slee
 		case constant.FILELD_TYPE_EMAIL:
 			r := rule.MakeRuleEmail()
 			fields[idx] = field.MakeFieldEmail(item.key, r)
+		case constant.FIELD_TYPE_SEQUENCE:
+			r := rule.MakeRuleSequence(item.begin, item.step)
+			fields[idx] = field.MakeFieldSequence(item.key, r)
+		case constant.FIELD_TYPE_TIMESTAMP:
+			r := rule.MakeRuleTimestamp()
+			fields[idx] = field.MakeFieldTimestamp(item.key, r)
 		default:
-			log.Println("unknow field type")
+			log.Println("unknow field type:", item.typ)
 		}
 	}
 	g.fields = fields
@@ -95,7 +104,15 @@ func MakeGoDeng(cfg *Config, o string, f string, count int64, forever bool, slee
 	return g
 }
 
+func (g *GoDeng) waitSignal() {
+	ch := make(chan os.Signal, 1)
+	signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT, syscall.SIGTERM)
+	<-ch
+	g.cancel()
+}
+
 func (g *GoDeng) Start() {
+	go g.waitSignal()
 	go g.barking()
 
 	if g.forever {
