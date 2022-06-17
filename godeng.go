@@ -24,14 +24,14 @@ type GoDeng struct {
 	config    Config
 	count     int64
 	sleep     int64
-	forever   bool
+	loop      bool
 	url       string
 	tablename string
 	cancel    context.CancelFunc
 	ctx       context.Context
 }
 
-func MakeGoDeng(cfg *Config, o string, f string, count int64, forever bool, sleep int64, url string, tablename string, file string) *GoDeng {
+func MakeGoDeng(cfg *Config, o string, f string, count int64, loop bool, sleep int64, url string, tablename string, file string) *GoDeng {
 
 	g := &GoDeng{
 		wangChan: make(chan row, 20480),
@@ -110,7 +110,7 @@ func MakeGoDeng(cfg *Config, o string, f string, count int64, forever bool, slee
 
 	g.sleep = sleep
 	g.count = count
-	g.forever = forever
+	g.loop = loop
 	g.url = url
 	g.tablename = tablename
 	return g
@@ -127,7 +127,7 @@ func (g *GoDeng) Start() {
 	go g.waitSignal()
 	go g.barking()
 
-	if g.forever {
+	if g.loop {
 		g.runForever()
 	} else {
 		g.run()
