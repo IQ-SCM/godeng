@@ -20,3 +20,7 @@ func (f *JSONFormat) Format(row inter.Row) []byte {
 	b, _ := json.Marshal(m)
 	return b
 }
+
+func MakeJSONFormat() *JSONFormat {
+	return &JSONFormat{}
+}

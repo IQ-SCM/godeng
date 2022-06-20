@@ -33,3 +33,9 @@ func (f *SQLFormat) Format(row inter.Row) []byte {
 	ret = ret[:len(ret)-2] + ");"
 	return []byte(ret)
 }
+
+func MakeSQLFormat(tablename string) *SQLFormat {
+	return &SQLFormat{
+		Tablename: tablename,
+	}
+}

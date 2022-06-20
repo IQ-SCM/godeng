@@ -38,11 +38,9 @@ func MakeGoDeng(cfg *Config, o string, f string, count int64, loop bool, sleep i
 	}
 	switch f {
 	case "json":
-		g.format = &format.JSONFormat{}
+		g.format = format.MakeJSONFormat()
 	case "sql":
-		g.format = &format.SQLFormat{
-			Tablename: tablename,
-		}
+		g.format = format.MakeSQLFormat(tablename)
 	default:
 		log.Println("unknow format")
 	}
@@ -52,6 +50,8 @@ func MakeGoDeng(cfg *Config, o string, f string, count int64, loop bool, sleep i
 		g.output = output.MakeStdoutOutput()
 	case "file":
 		g.output = output.MakeFileOutput(file)
+	case "http":
+		g.output = output.MakeHTTPOutput(url)
 	}
 
 	fields := make([]inter.Field, len(cfg.items))
