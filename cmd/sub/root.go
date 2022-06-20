@@ -26,15 +26,17 @@ var rootCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "config file")
+	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "", "./dodeng.json", "config file")
+
 	rootCmd.PersistentFlags().StringVarP(&output, "output", "", "stdout", "output")
-	rootCmd.PersistentFlags().StringVarP(&format, "format", "", "json", "format")
+	rootCmd.PersistentFlags().StringVarP(&format, "format", "", "json", "output format")
 	rootCmd.PersistentFlags().Int64VarP(&count, "count", "", 100, "count")
-	rootCmd.PersistentFlags().StringVarP(&url, "url", "", "", "http request url")
-	rootCmd.PersistentFlags().StringVarP(&tablename, "tablename", "", "", "tablename")
-	rootCmd.PersistentFlags().Int64VarP(&sleep, "sleep", "", 0, "sleep")
-	rootCmd.PersistentFlags().BoolVarP(&loop, "loop", "", false, "loop")
-	rootCmd.PersistentFlags().StringVarP(&file, "file", "", "", "output file")
+	rootCmd.PersistentFlags().StringVarP(&url, "url", "", "", "http request url,only used when output is http/https")
+	rootCmd.PersistentFlags().StringVarP(&tablename, "tablename", "", "godeng", "tablename, only used when output is sql")
+	rootCmd.PersistentFlags().Int64VarP(&sleep, "sleep", "", 0, "fix creation time interval for each log (second)")
+	rootCmd.PersistentFlags().BoolVarP(&loop, "loop", "", false, "loop output forever until killed. if loop is set, then count is ignored")
+	rootCmd.PersistentFlags().StringVarP(&file, "file", "", "./godeng.out", "output file, only used when output is file")
+
 }
 
 func Execute() {
