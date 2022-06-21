@@ -1,5 +1,5 @@
 FROM golang:1.18 AS build_base
-
+LABEL maintainer="chenjiayao <chenjiayaooo@gmail.com>"
 WORKDIR /tmp/godeng
 
 COPY . .
