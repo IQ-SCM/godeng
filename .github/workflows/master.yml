@@ -6,7 +6,7 @@ on:
       - 'master'
 
 jobs:
-  docker:
+  build & push:
     runs-on: ubuntu-latest
     steps:
       -
@@ -30,4 +30,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: chenjiayao/godeng:latest
+          tags: chenjiayao/godeng:latest, ${{ steps.prep.outputs.tagged_image }}
