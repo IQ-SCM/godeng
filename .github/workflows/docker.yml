@@ -2,6 +2,9 @@ name: docker-build-push
 
 on:
   push:
+    tags:
+      - 'v*.*.*'
+  pull_request:
     branches:
       - 'master'
 
@@ -50,11 +53,11 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: chenjiayao/godeng:latest, ${{ steps.meta.outputs.tags }}
-
-      - name: Sync
-        uses: ms-jpq/sync-dockerhub-readme@v1
+          labels: ${{ steps.meta.outputs.labels }}
+      -
+        name: Update repo description
+        uses: peter-evans/dockerhub-description@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PWD }}
-          repository: "chenjiayao/godeng"
-          readme: "./README.md"
+          repository: user/app
