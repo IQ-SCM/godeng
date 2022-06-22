@@ -50,3 +50,11 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: chenjiayao/godeng:latest, ${{ steps.meta.outputs.tags }}
+
+      - name: Sync
+        uses: ms-jpq/sync-dockerhub-readme@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PWD }}
+          repository: "chenjiayao/godeng"
+          readme: "./README.md"
