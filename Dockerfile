@@ -14,7 +14,7 @@ FROM alpine:3.14
 
 WORKDIR /app
 
-COPY --from=build_base /tmp/configs/example.json /app/config.json
+COPY --from=build_base /tmp/godeng/configs/example.json /app/config.json
 COPY --from=build_base /tmp/godeng/bin/godeng /app/godeng
 
 CMD ["/app/godeng", "--config", "/app/config.json"]
