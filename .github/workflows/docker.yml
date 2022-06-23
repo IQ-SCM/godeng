@@ -56,4 +56,4 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PWD }}
-          repository: user/app
+          repository: chenjiayao/godeng
