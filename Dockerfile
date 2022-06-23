@@ -18,4 +18,4 @@ WORKDIR /app
 COPY --from=build_base /tmp/godeng/configs/example.json /app/config.json
 COPY --from=build_base /tmp/godeng/bin/godeng /app/godeng
 
-CMD ["/app/godeng", "--config", "/app/config.json"]
+CMD ["/app/godeng", "--config=/app/config.json", "--sleep=1", "--loop"]
