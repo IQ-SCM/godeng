@@ -1,8 +1,12 @@
 # godeng
 
-Godeng is used to generate test logs. For example, to generate a large amount of test data in ELK. you can define the rule and name of the fields, and godeng will automatically generate the data for you. 
+![](https://img.shields.io/github/license/chenjiayao/godeng)
+![](https://github.com/chenjiayao/godeng/actions/workflows/gorelease.yml/badge.svg)
 
-Godeng depends on gofakeit, thanks to [gofakeit](https://github.com/mingrammer/flog) 🥰
+
+Godeng is used to generate test logs. For example, to generate a large amount of test data in ELK. you can define the rule and name of the fields, and godeng will automatically **generate** the data for you. 
+
+**Godeng depends on gofakeit, thanks to [gofakeit](https://github.com/mingrammer/flog) 🥰**
 
 ## 👨‍💻 installation
 
@@ -81,4 +85,4 @@ godeng --config=godeng.json --format=json --output=file --file=output.json
 
 ## Issue
 
-if you need more ouput/format/support type or find a bug, please raise a [issue](https://github.com/chenjiayao/godeng/issues)
+if you need more ouput/format/support type or find a bug, please raise a [issue](https://github.com/chenjiayao/godeng/issues).
