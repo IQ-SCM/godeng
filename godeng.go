@@ -42,7 +42,7 @@ func MakeGoDeng(cfg *Config, o string, f string, count int64, loop bool, sleep i
 	case "sql":
 		g.format = format.MakeSQLFormat(tablename)
 	default:
-		log.Println("unknow format")
+		log.Println("unknown format")
 	}
 
 	switch o {
@@ -53,6 +53,8 @@ func MakeGoDeng(cfg *Config, o string, f string, count int64, loop bool, sleep i
 	case "http":
 		g.output = output.MakeHTTPOutput(url)
 		g.format = format.MakeJSONFormat()
+	default:
+		log.Println("unkown output")
 	}
 
 	fields := make([]inter.Field, len(cfg.items))
@@ -101,7 +103,8 @@ func MakeGoDeng(cfg *Config, o string, f string, count int64, loop bool, sleep i
 			r := rule.MakeRuleUA()
 			fields[idx] = field.MakeFieldUA(item.key, r)
 		default:
-			log.Println("unknow field type:", item.typ)
+			log.Println("unknown field type:", item.typ)
+			break
 		}
 	}
 	g.fields = fields

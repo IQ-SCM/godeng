@@ -46,6 +46,7 @@ func Execute() {
 }
 
 func run() {
+	log.SetFlags(0)
 	config, err := godeng.Parser(cfgFile)
 	if err != nil {
 		log.Fatal(err)

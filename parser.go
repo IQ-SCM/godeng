@@ -2,7 +2,7 @@ package godeng
 
 import (
 	"errors"
-	"log"
+	"fmt"
 
 	"github.com/chenjiayao/godeng/constant"
 	"github.com/chenjiayao/godeng/validator"
@@ -17,11 +17,11 @@ func Parser(cfgFile string) (*Config, error) {
 	}
 	fieldsVal := viper.Get("fields")
 	if fieldsVal == nil {
-		return nil, errors.New("fields is empty")
+		return nil, errors.New("config fields is empty")
 	}
 	inters, ok := fieldsVal.([]interface{})
 	if !ok {
-		return nil, errors.New("fields is not array")
+		return nil, errors.New("config fields is not array")
 	}
 
 	fields := make([]map[string]interface{}, len(inters))
@@ -39,7 +39,7 @@ func makeFields(fields []map[string]interface{}) (*Config, error) {
 
 		fieldType, ok := field["type"].(string)
 		if !ok {
-			return nil, errors.New("field type is not string")
+			return nil, errors.New("type field must be string")
 		}
 		var cfgItem *ConfigItem
 		var err error
@@ -74,7 +74,7 @@ func makeFields(fields []map[string]interface{}) (*Config, error) {
 		case constant.FIELD_TYPE_UA:
 			cfgItem, err = parserUA(field)
 		default:
-			log.Printf("unknown field type: %s", fieldType)
+			err = fmt.Errorf("unknown field type: %s", fieldType)
 		}
 		if err != nil {
 			return nil, err
@@ -82,7 +82,6 @@ func makeFields(fields []map[string]interface{}) (*Config, error) {
 		cfgItem.typ = fieldType
 		cfgItems[idx] = cfgItem
 	}
-
 	cfg.items = cfgItems
 	return cfg, nil
 }
