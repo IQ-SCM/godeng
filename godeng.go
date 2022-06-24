@@ -34,7 +34,7 @@ type GoDeng struct {
 func MakeGoDeng(cfg *Config, o string, f string, count int64, loop bool, sleep int64, url string, tablename string, file string) *GoDeng {
 
 	g := &GoDeng{
-		wangChan: make(chan row, 20480),
+		wangChan: make(chan row),
 	}
 	switch f {
 	case "json":
@@ -126,13 +126,13 @@ func (g *GoDeng) waitSignal() {
 
 func (g *GoDeng) Start() {
 	go g.waitSignal()
-	go g.barking()
 
 	if g.loop {
-		g.runForever()
+		go g.runForever()
 	} else {
-		g.run()
+		go g.run()
 	}
+	g.barking()
 }
 
 func (g *GoDeng) runForever() {
