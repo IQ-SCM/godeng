@@ -52,6 +52,7 @@ func MakeGoDeng(cfg *Config, o string, f string, count int64, loop bool, sleep i
 		g.output = output.MakeFileOutput(file)
 	case "http":
 		g.output = output.MakeHTTPOutput(url)
+		g.format = format.MakeJSONFormat()
 	}
 
 	fields := make([]inter.Field, len(cfg.items))
@@ -174,9 +175,10 @@ func (g *GoDeng) barking() {
 
 	for {
 		select {
-		case <-g.ctx.Done():
-			return
-		case item := <-g.wangChan:
+		case item, ok := <-g.wangChan:
+			if !ok {
+				return
+			}
 			if g.sleep > 0 {
 				time.Sleep(time.Duration(g.sleep) * time.Second)
 			}
