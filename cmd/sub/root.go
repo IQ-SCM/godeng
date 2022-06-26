@@ -51,5 +51,9 @@ func run() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	godeng.MakeGoDeng(config, output, format, count, loop, sleep, url, tablename, file).Start()
+	godeng, err := godeng.MakeGoDeng(config, output, format, count, loop, sleep, url, tablename, file)
+	if err != nil {
+		log.Fatal(err)
+	}
+	godeng.Start()
 }

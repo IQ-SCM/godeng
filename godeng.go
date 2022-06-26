@@ -2,7 +2,7 @@ package godeng
 
 import (
 	"context"
-	"log"
+	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
@@ -31,7 +31,34 @@ type GoDeng struct {
 	ctx       context.Context
 }
 
-func MakeGoDeng(cfg *Config, o string, f string, count int64, loop bool, sleep int64, url string, tablename string, file string) *GoDeng {
+func validate(o string, f string, count int64, loop bool, sleep int64, url string, tablename string, file string) error {
+	if !loop && count <= 0 {
+		return fmt.Errorf("count must be greater than 0")
+	}
+
+	if sleep <= 0 {
+		return fmt.Errorf("sleep must be greater than 0")
+	}
+
+	if o == "http" && url == "" {
+		return fmt.Errorf("url must be set if output is http")
+	}
+
+	if f == "sql" && tablename == "" {
+		return fmt.Errorf("tablename must be set if output is sql")
+	}
+
+	if o == "file" && file == "" {
+		return fmt.Errorf("file must be set if output is file")
+	}
+	return nil
+}
+
+func MakeGoDeng(cfg *Config, o string, f string, count int64, loop bool, sleep int64, url string, tablename string, file string) (*GoDeng, error) {
+
+	if err := validate(o, f, count, loop, sleep, url, tablename, file); err != nil {
+		return nil, err
+	}
 
 	g := &GoDeng{
 		wangChan: make(chan row),
@@ -42,7 +69,7 @@ func MakeGoDeng(cfg *Config, o string, f string, count int64, loop bool, sleep i
 	case "sql":
 		g.format = format.MakeSQLFormat(tablename)
 	default:
-		log.Println("unknown format")
+		return nil, fmt.Errorf("unknown format: %s", f)
 	}
 
 	switch o {
@@ -54,7 +81,7 @@ func MakeGoDeng(cfg *Config, o string, f string, count int64, loop bool, sleep i
 		g.output = output.MakeHTTPOutput(url)
 		g.format = format.MakeJSONFormat()
 	default:
-		log.Println("unkown output")
+		return nil, fmt.Errorf("unknown output: %s", f)
 	}
 
 	fields := make([]inter.Field, len(cfg.items))
@@ -103,8 +130,7 @@ func MakeGoDeng(cfg *Config, o string, f string, count int64, loop bool, sleep i
 			r := rule.MakeRuleUA()
 			fields[idx] = field.MakeFieldUA(item.key, r)
 		default:
-			log.Println("unknown field type:", item.typ)
-			break
+			return nil, fmt.Errorf("unknown field type: %s", item.typ)
 		}
 	}
 	g.fields = fields
