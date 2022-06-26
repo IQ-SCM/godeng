@@ -11,7 +11,7 @@ type RuleUUID struct {
 var _ inter.Rule = &RuleUUID{}
 
 func (rule *RuleUUID) Generate() interface{} {
-	return gofakeit.URL()
+	return gofakeit.UUID()
 }
 
 func MakeRuleUUID() *RuleUUID {
