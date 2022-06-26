@@ -188,3 +188,19 @@ func ValidateSequence(cfgMap map[string]interface{}) error {
 
 	return nil
 }
+
+func ValidateUUID(cfgMap map[string]interface{}) error {
+	_, ok := cfgMap["key"]
+	if !ok {
+		return fmt.Errorf("key is empty")
+	}
+	return nil
+}
+
+func ValidateSentence(cfgMap map[string]interface{}) error {
+	_, ok := cfgMap["key"]
+	if !ok {
+		return fmt.Errorf("key is empty")
+	}
+	return nil
+}

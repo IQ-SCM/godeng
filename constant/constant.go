@@ -16,4 +16,5 @@ const (
 	FIELD_TYPE_SEQUENCE  = "sequence"
 	FIELD_TYPE_UA        = "ua"
 	FIELD_TYPE_UUID      = "uuid"
+	FIELD_TYPE_SENTCNCE  = "sentence"
 )
