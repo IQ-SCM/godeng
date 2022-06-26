@@ -87,6 +87,8 @@ The config file defines the properties of each field, each field has at least tw
 - email
 - sequence
 - ua (user-agent)
+- uuid
+- sentence
 
 
 ## Issue
