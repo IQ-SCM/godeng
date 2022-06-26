@@ -25,7 +25,7 @@ func (f *FieldUUID) Key() string {
 
 func MakeFieldUUID(key string, rule inter.Rule) inter.Field {
 	return &FieldUUID{
-		typ:  constant.FILED_TYPE_IPV4,
+		typ:  constant.FIELD_TYPE_UUID,
 		key:  key,
 		rule: rule,
 	}
