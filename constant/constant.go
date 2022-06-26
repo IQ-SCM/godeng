@@ -15,4 +15,5 @@ const (
 	FILELD_TYPE_EMAIL    = "email"
 	FIELD_TYPE_SEQUENCE  = "sequence"
 	FIELD_TYPE_UA        = "ua"
+	FIELD_TYPE_UUID      = "uuid"
 )
