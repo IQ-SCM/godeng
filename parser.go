@@ -73,6 +73,10 @@ func makeFields(fields []map[string]interface{}) (*Config, error) {
 			cfgItem, err = parserSequence(field)
 		case constant.FIELD_TYPE_UA:
 			cfgItem, err = parserUA(field)
+		case constant.FIELD_TYPE_UUID:
+			cfgItem, err = parserUUID(field)
+		case constant.FIELD_TYPE_SENTCNCE:
+			cfgItem, err = parserSentence(field)
 		default:
 			err = fmt.Errorf("unknown field type: %s", fieldType)
 		}
@@ -272,6 +276,26 @@ func parserSequence(field map[string]interface{}) (*ConfigItem, error) {
 		key:   field["key"].(string),
 		begin: field["begin"].(float64),
 		step:  field["step"].(float64),
+	}
+	return cfgItem, nil
+}
+
+func parserUUID(field map[string]interface{}) (*ConfigItem, error) {
+	if err := validator.ValidateUUID(field); err != nil {
+		return nil, err
+	}
+	cfgItem := &ConfigItem{
+		key: field["key"].(string),
+	}
+	return cfgItem, nil
+}
+
+func parserSentence(field map[string]interface{}) (*ConfigItem, error) {
+	if err := validator.ValidateSentence(field); err != nil {
+		return nil, err
+	}
+	cfgItem := &ConfigItem{
+		key: field["key"].(string),
 	}
 	return cfgItem, nil
 }

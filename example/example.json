@@ -68,6 +68,14 @@
         {
             "key":"mac",
             "type":"mac"
+        },
+        {
+            "key":"uuid",
+            "type":"uuid"
+        },
+        {
+            "key":"sentence",
+            "type":"sentence"
         }
     ]
 }

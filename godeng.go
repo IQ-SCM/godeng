@@ -132,6 +132,9 @@ func MakeGoDeng(cfg *Config, o string, f string, count int64, loop bool, sleep i
 		case constant.FIELD_TYPE_UUID:
 			r := rule.MakeRuleUUID()
 			fields[idx] = field.MakeFieldUUID(item.key, r)
+		case constant.FIELD_TYPE_SENTCNCE:
+			r := rule.MakeRuleSentence()
+			fields[idx] = field.MakeFieldSentence(item.key, r)
 		default:
 			return nil, fmt.Errorf("unknown field type: %s", item.typ)
 		}
