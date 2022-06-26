@@ -36,7 +36,7 @@ func validate(o string, f string, count int64, loop bool, sleep int64, url strin
 		return fmt.Errorf("count must be greater than 0")
 	}
 
-	if sleep <= 0 {
+	if sleep < 0 {
 		return fmt.Errorf("sleep must be greater than 0")
 	}
 
@@ -143,7 +143,7 @@ func MakeGoDeng(cfg *Config, o string, f string, count int64, loop bool, sleep i
 	g.loop = loop
 	g.url = url
 	g.tablename = tablename
-	return g
+	return g, nil
 }
 
 func (g *GoDeng) waitSignal() {
