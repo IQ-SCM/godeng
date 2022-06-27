@@ -6,7 +6,7 @@
 
 Godeng is used to generate test logs. For example, to generate a large amount of test data in ELK. you can define the rule and name of the fields, and godeng will automatically **generate** the data for you. 
 
-**Godeng depends on gofakeit, thanks to [gofakeit](https://github.com/mingrammer/flog) 🥰**
+**Godeng depends on gofakeit, thanks to [gofakeit](https://github.com/brianvoe/gofakeit) 🥰**
 
 ## 👨‍💻 installation
 
