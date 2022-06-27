@@ -37,7 +37,7 @@ Flags:
       --output string      output (default "stdout")
       --sleep int          fix creation time interval for each log (second)
       --tablename string   tablename, only used when output is sql (default "godeng")
-      --url string         http request url,only used when output is http/https and output is json
+      --url string         http request url,only used when output is http/https and format is json
 ```
 ## Examples
 
