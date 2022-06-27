@@ -44,6 +44,10 @@ func validate(o string, f string, count int64, loop bool, sleep int64, url strin
 		return fmt.Errorf("url must be set if output is http")
 	}
 
+	if o == "http" && f != "json" {
+		return fmt.Errorf("only json format is supported for http output")
+	}
+
 	if f == "sql" && tablename == "" {
 		return fmt.Errorf("tablename must be set if output is sql")
 	}
